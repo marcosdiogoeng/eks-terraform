@@ -6,7 +6,7 @@ resource "aws_route_table" "public_rtb" {
     gateway_id = aws_internet_gateway.igw.id
   }
 
-  tags = merge(local.tags,{
+  tags = merge(var.tags, {
     Name = "public-rtb"
   })
 }
