@@ -12,6 +12,10 @@ on:
         - main
         - development
 
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION: us-east-1
 jobs:
     terraform:
         name: "Apply terraform code changes"
@@ -23,14 +27,6 @@ jobs:
         steps:
         - name: Checkout source code 
           uses: actions/checkout@v4
-
-        - name: Set AWS Credentials
-          if: github.ref == 'refs/heads/main' 
-          run: | 
-            echo "Configuring AWS credentials for main..."
-            export AWS_ACCESS_KEY_ID=${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
-            export AWS_SECRET_ACCESS_KEY=${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
-            export AWS_REGION="us-east-1"
 
         - name: Install Terraform
           run: |
