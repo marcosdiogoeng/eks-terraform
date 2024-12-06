@@ -1,4 +1,4 @@
-name: Terraform Apply
+name: Terraform Destroy
 
 on:
     workflow_dispatch:
@@ -40,4 +40,4 @@ jobs:
           run: terraform init -backend=true -backend-config="config/dev/backend.hcl"
 
         - name: Terraform Destroy
-          run: terraform destroy -auto-aprove
+          run: terraform destroy -auto-approve
