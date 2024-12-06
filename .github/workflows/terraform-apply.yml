@@ -34,6 +34,8 @@ jobs:
             export AWS_ACCESS_KEY_ID=${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
             export AWS_SECRET_ACCESS_KEY=${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
             export AWS_REGION="us-east-1"
+            echo $AWS_ACCESS_KEY_ID
+            echo $AWS_SECRET_ACCESS_KEY
 
         - name: Install Terraform
           run: |
@@ -47,11 +49,7 @@ jobs:
         - name: Terraform Init
           id: init
           if: github.ref == 'refs/heads/main' 
-          run: |
-            terraform init \
-            -backend-config="bucket=${{ secrets.BUCKET_TF_STATE_PROD }}" \
-            -backend-config="key="terraform.tfstate"" \
-            -backend-config="region=us-east-1"
+          run: terraform init
 
             
         - name: Terraform Format
