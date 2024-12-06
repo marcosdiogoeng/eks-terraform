@@ -7,3 +7,8 @@ variable "tags" {
   type        = map(string)
   description = "Tags to be added, making reference to locals.tf"
 }
+
+variable "environment" {
+  type = string
+  description = "Enviroment for deploy (dev, stagin, prod, etc.)"
+}

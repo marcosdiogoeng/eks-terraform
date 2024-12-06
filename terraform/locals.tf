@@ -1,7 +1,11 @@
 locals {
+
   tags = {
-    Department  = "devops"
-    Project     = "ECS"
-    Environment = "development"
+    Department   = "devops"
+    Organization = "WayCarbon"
+    Project      = "EKS"
+    Environment  = var.environment
+    ManagedBy    = "terraform"
+
   }
 }
