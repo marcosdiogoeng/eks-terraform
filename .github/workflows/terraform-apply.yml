@@ -48,7 +48,7 @@ jobs:
           id: init
           if: github.ref == 'refs/heads/main' 
           run: |
-            terraform init -backend=true -backend-config="config/prod/backend.hcl"
+            terraform init -backend=true -backend-config="./config/prod/backend.hcl"
             
         - name: Terraform Format
           id: fmt
