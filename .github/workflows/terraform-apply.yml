@@ -1,18 +1,19 @@
 name: Terraform Apply
 
 on:
+    workflow_dispatch:
     push:
       branches: 
         - main
         - development
       paths: 
-        - ecs-terraform/**
+        - ./**
     pull_request:
       branches: 
         - main
         - development
       paths: 
-        - ecs-terraform/**
+        - ./**
 
 jobs:
     terraform:
