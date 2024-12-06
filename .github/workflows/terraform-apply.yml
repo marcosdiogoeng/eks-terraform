@@ -52,9 +52,9 @@ jobs:
           if: github.ref == 'refs/heads/main' 
           run: | 
             terraform init -backend=true \
-            -backend-config="bucket=${{ secrets.BUCKET_TF_STATE_PROD }}"
+            -backend-config="bucket=${{ secrets.BUCKET_TF_STATE_PROD }}" \
             -backend-config="key=terraform.tfstate" \
-            -backend-config="region=$AWS_REGION" \
+            -backend-config="region=$AWS_REGION" 
 
             
         - name: Terraform Format
