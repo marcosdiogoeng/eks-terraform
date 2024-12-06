@@ -48,7 +48,11 @@ jobs:
           id: init
           if: github.ref == 'refs/heads/main' 
           run: |
-            terraform init -backend=true -backend-config="config/prod/backend.hcl"
+            terraform init \
+            -backend-config="bucket=${{ secrets.BUCKET_TF_STATE_PROD }}" \
+            -backend-config="key="terraform.tfstate"" \
+            -backend-config="region=us-east-1"
+
             
         - name: Terraform Format
           id: fmt
