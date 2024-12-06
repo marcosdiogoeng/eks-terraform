@@ -13,9 +13,8 @@ on:
         - development
 
 env:
-  # AWS_ACCESS_KEY_ID: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
-  # AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
   AWS_REGION: us-east-1
+
 jobs:
     terraform:
         name: "Apply terraform code changes"
@@ -47,7 +46,7 @@ jobs:
         - name: Terraform Init
           id: init
           if: github.ref == 'refs/heads/main' 
-          run: terraform init
+          run: terraform init -backend=true -backend-config="config/dev/backend.hcl"
 
             
         - name: Terraform Format
