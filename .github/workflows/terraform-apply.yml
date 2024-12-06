@@ -46,16 +46,10 @@ jobs:
 
         - name: Terraform Init
           id: init
+          if: github.ref == 'refs/heads/main' 
           run: |
-            if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-              terraform init -backend=true -backend-config="config/prod/backend.hcl"
-            elif [[ "${{ github.ref }}" == "refs/heads/development" ]]; then
-              terraform init -backend-config "bucket=${{ secrets.BUCKET_TF_STATE_DEV }}"
-            else
-              echo "Unsupported branch: ${{ github.ref }}"
-              exit 1
-            fi
-
+            terraform init -backend=true -backend-config="config/prod/backend.hcl"
+            
         - name: Terraform Format
           id: fmt
           run: terraform fmt -check
