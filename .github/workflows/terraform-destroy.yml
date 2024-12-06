@@ -2,19 +2,6 @@ name: Terraform Apply
 
 on:
     workflow_dispatch:
-    push:
-      branches: 
-        - main
-        - development
-      paths:
-        - terraform/**
-    
-    pull_request:
-      branches: 
-        - main
-        - development
-      paths:
-        - terraform/**
 
 env:
   AWS_REGION: us-east-1
@@ -52,26 +39,5 @@ jobs:
           if: github.ref == 'refs/heads/main' 
           run: terraform init -backend=true -backend-config="config/dev/backend.hcl"
 
-            
-        - name: Terraform Format
-          id: fmt
-          run: terraform fmt -check
-          continue-on-error: true 
-
-        - name: Terraform Validate
-          id: validate
-          run: terraform validate
-
-        - name: Terraform Plan
-          id: plan
-          run: terraform plan -no-color -input=false -out planfile
-          continue-on-error: true 
-
-        - name: Terraform Plan Status 
-          if: steps.plan.outcome == 'failure'
-          run: exit 1
-
-        - name: Terraform Apply
-          id: apply
-          if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-          run: terraform apply -auto-approve -input=false -parallelism=1 planfile
+        - name: Terraform Destroy
+          run: terraform destroy -auto-aprove
