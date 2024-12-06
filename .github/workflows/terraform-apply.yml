@@ -28,8 +28,8 @@ jobs:
           run: |
             if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
               echo "Using production credentials"
-              export "AWS_ACCESS_KEY_ID=${{ secrets.PROD_AWS_ACCESS_KEY_ID }}"
-              export "AWS_SECRET_ACCESS_KEY=${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}"
+              export AWS_ACCESS_KEY_ID=${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
+              export AWS_SECRET_ACCESS_KEY=${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
               
             elif [[ "${{ github.ref }}" == "refs/heads/development" ]]; then
               echo "Using development credentials"
