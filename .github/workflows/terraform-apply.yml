@@ -50,7 +50,7 @@ jobs:
         - name: Terraform Init
           id: init
           if: github.ref == 'refs/heads/main' 
-          run: terraform init -backend=true -backend-config="config/dev/backend.hcl"
+          run: terraform init -backend=true -backend-config="config/prod/backend.hcl"
 
             
         - name: Terraform Format
