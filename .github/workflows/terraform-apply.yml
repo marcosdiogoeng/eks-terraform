@@ -6,14 +6,11 @@ on:
       branches: 
         - main
         - development
-      paths: 
-        - ./**
+    
     pull_request:
       branches: 
         - main
         - development
-      paths: 
-        - ./**
 
 jobs:
     terraform:
@@ -31,8 +28,8 @@ jobs:
           run: |
             if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
               echo "Using production credentials"
-              echo "AWS_ACCESS_KEY_ID=${{ secrets.PROD_AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-              echo "AWS_SECRET_ACCESS_KEY=${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+              export "AWS_ACCESS_KEY_ID=${{ secrets.PROD_AWS_ACCESS_KEY_ID }}"
+              export "AWS_SECRET_ACCESS_KEY=${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}"
               
             elif [[ "${{ github.ref }}" == "refs/heads/development" ]]; then
               echo "Using development credentials"
