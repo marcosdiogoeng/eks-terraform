@@ -50,7 +50,11 @@ jobs:
         - name: Terraform Init
           id: init
           if: github.ref == 'refs/heads/main' 
-          run: terraform init -backend=true -backend-config="config/prod/backend.hcl"
+          run: | 
+            terraform init -backend=true \
+            -backend-config="bucket=${{ secrets.BUCKET_TF_STATE_PROD }}"
+            -backend-config="key=terraform.tfstate" \
+            -backend-config="region=$AWS_REGION" \
 
             
         - name: Terraform Format
