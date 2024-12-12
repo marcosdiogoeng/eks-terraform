@@ -2,8 +2,7 @@ locals {
 
   tags = {
     Department   = "devops"
-    Organization = "WayCarbon"
-    Project      = "EKS"
+    Organization = "waycarbon"
     Environment  = var.environment
     ManagedBy    = "terraform"
 

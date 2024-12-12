@@ -8,7 +8,7 @@ variable "tags" {
   description = "Tags to be added, making reference to locals.tf"
 }
 
-variable "environment" {
-  type = string
-  description = "Enviroment for deploy (dev, stagin, prod, etc.)"
+variable "project_name" {
+  type        = string
+  description = "Name of the project"
 }

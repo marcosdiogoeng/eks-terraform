@@ -5,10 +5,16 @@ variable "cidr_block" {
 }
 
 variable "environment" {
-  type = string
-  description = "Enviroment for deploy (dev, stagin, prod, etc.)"
+  type        = string
+  description = "Enviroment for deploy (development, staging, production, etc.)"
   validation {
-    condition     = contains(["development", "stagin", "production"], var.environment)
+    condition     = contains(["development", "staging", "production"], var.environment)
     error_message = "O ambiente deve ser 'development', 'stagin' ou 'production'."
   }
+}
+
+variable "project_name" {
+  type        = string
+  description = "Name of the project"
+  default     = "eks"
 }

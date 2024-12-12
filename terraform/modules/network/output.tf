@@ -10,17 +10,10 @@ output "subnet_public_1b" {
   value = aws_subnet.public_1b.id
 }
 
-output "subnet_public_1c" {
-  value = aws_subnet.public_1c.id
-}
-
 output "subnet_private_1a" {
-  value = aws_subnet.private_1a
+  value = aws_subnet.private_1a.id
 }
 
 output "subnet_private_1b" {
-  value = aws_subnet.private_1a
-}
-output "subnet_private_1c" {
-  value = aws_subnet.private_1a
+  value = aws_subnet.private_1a.id
 }

@@ -7,7 +7,7 @@ resource "aws_route_table" "public_rtb" {
   }
 
   tags = merge(var.tags, {
-    Name = "public-rtb"
+    Name = "${var.project_name}-public-rtb"
   })
 }
 
@@ -17,9 +17,5 @@ resource "aws_route_table_association" "public_a" {
 }
 resource "aws_route_table_association" "public_b" {
   subnet_id      = aws_subnet.public_1b.id
-  route_table_id = aws_route_table.public_rtb.id
-}
-resource "aws_route_table_association" "public_c" {
-  subnet_id      = aws_subnet.public_1c.id
   route_table_id = aws_route_table.public_rtb.id
 }

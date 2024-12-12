@@ -2,7 +2,7 @@ resource "aws_eip" "ngw_eip_1a" {
   vpc = true
 
   tags = merge(var.tags, {
-    Name = "ngw-eip-1a"
+    Name = "${var.project_name}-ngw-eip-1a"
   })
 }
 
@@ -11,7 +11,7 @@ resource "aws_nat_gateway" "ngw_private_1a" {
   subnet_id     = aws_subnet.public_1a.id
 
   tags = merge(var.tags, {
-    Name = "ngw-1a"
+    Name = "${var.project_name}-ngw-1a"
   })
 
 }
