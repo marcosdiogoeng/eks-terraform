@@ -1,3 +1,10 @@
+variable "aws_region" {
+  type        = string
+  description = "AWS region to deploy the resources"
+  default     = "us-east-1"
+
+}
+
 variable "cidr_block" {
   type        = string
   description = "Networking CIDR block to be used for the VPC"
@@ -6,15 +13,12 @@ variable "cidr_block" {
 
 variable "environment" {
   type        = string
-  description = "Enviroment for deploy (development, staging, production, etc.)"
-  validation {
-    condition     = contains(["development", "staging", "production"], var.environment)
-    error_message = "O ambiente deve ser 'development', 'stagin' ou 'production'."
-  }
+  description = "value of the environment"
+  default     = "development"
 }
 
 variable "project_name" {
   type        = string
   description = "Name of the project"
   default     = "eks"
-}
+} 

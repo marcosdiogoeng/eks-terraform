@@ -1,43 +1,41 @@
-name: Terraform Apply
+name: Terraform Apply Development
 
 on:
     workflow_dispatch:
     # push:
     #   branches: 
     #     - main
-    #     - development
     #   paths:
     #     - terraform/**
     
     # pull_request:
     #   branches: 
     #     - main
-    #     - development
     #   paths:
     #     - terraform/**
 
-env:
-  AWS_REGION: us-east-1
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
     terraform:
-        name: "Apply terraform code changes"
+        name: "Apply terraform resources"
         runs-on: ubuntu-latest
         defaults:
             run:
                 shell: bash
-                working-directory: ./terraform
+                working-directory: ./terraform/environments/development
         steps:
         - name: Checkout source code 
           uses: actions/checkout@v4
 
         - name: Set AWS Credentials for main
           if: github.ref == 'refs/heads/main'
-          run: |
-            echo "Configuring AWS credentials for main..."
-            echo "AWS_ACCESS_KEY_ID=${{ secrets.PROD_AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-            echo "AWS_SECRET_ACCESS_KEY=${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
-            echo "TF_VAR_environment=production" >> $GITHUB_ENV
+          uses: aws-actions/configure-aws-credentials@v4
+          with:
+            role-to-assume: ${{ secrets.DEV_AWS_ROLE_ARN }}
+            aws-region: ${{ env.AWS_REGION }}
 
         - name: Install Terraform
           run: |
@@ -53,9 +51,11 @@ jobs:
           if: github.ref == 'refs/heads/main' 
           run: | 
             terraform init -backend=true \
-            -backend-config="bucket=${{ secrets.BUCKET_TF_STATE_PROD }}" \
-            -backend-config="key=terraform.tfstate" \
-            -backend-config="region=$AWS_REGION" 
+            -backend-config="bucket=${{ secrets.DEV_BUCKET_TF_STATE_PROD }}" \
+            -backend-config="dynamodb_table=${{ secrets.DEV_DYNAMODB_TABLE }}" \
+            -backend-config="key=${{ secrets.DEV_BUCKET_KEY_NAME}}" \
+            -backend-config="region=${{ env.AWS_REGION }}" \
+            -backend-config="encrypt=true"
 
             
         - name: Terraform Format

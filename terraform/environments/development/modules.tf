@@ -1,12 +1,12 @@
 module "eks_network" {
-  source       = "./modules/network"
+  source       = "../../modules/network"
   cidr_block   = var.cidr_block
   tags         = local.tags
   project_name = var.project_name
 }
 
 module "eks_cluster" {
-  source           = "./modules/cluster"
+  source           = "../../modules/cluster"
   tags             = local.tags
   project_name     = var.project_name
   subnet_public_1a = module.eks_network.subnet_public_1a
@@ -14,7 +14,7 @@ module "eks_cluster" {
 }
 
 module "eks_managed_node_group" {
-  source            = "./modules/node-groups"
+  source            = "../../modules/node-groups"
   tags              = local.tags
   project_name      = var.project_name
   environment       = var.environment
@@ -24,7 +24,7 @@ module "eks_managed_node_group" {
 }
 
 module "eks_aws_load_balancer_controller" {
-  source       = "./modules/load-balancer"
+  source       = "../../modules/load-balancer"
   tags         = local.tags
   project_name = var.project_name
   oidc         = module.eks_cluster.oidc
