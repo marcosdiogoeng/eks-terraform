@@ -1,5 +1,5 @@
 resource "aws_eip" "ngw_eip_1a" {
-  vpc = true
+  domain = "vpc"
 
   tags = merge(var.tags, {
     Name = "${var.project_name}-ngw-eip-1a"

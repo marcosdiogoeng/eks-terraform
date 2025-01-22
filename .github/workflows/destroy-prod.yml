@@ -1,0 +1,50 @@
+name: Terraform Destroy
+
+on:
+    workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+    terraform:
+        name: "Destroy terraform resources"
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                shell: bash
+                working-directory: ./terraform/environments/development
+        steps:
+        - name: Checkout source code 
+          uses: actions/checkout@v4
+
+        - name: Set AWS Credentials for main
+          if: github.ref == 'refs/heads/main'
+          uses: aws-actions/configure-aws-credentials@v4
+          with:
+            role-to-assume: ${{ secrets.DEV_AWS_ROLE_ARN }}
+            aws-region: ${{ env.AWS_REGION }}
+
+        - name: Install Terraform
+          run: |
+            TERRAFORM_VERSION=1.10.1
+            curl -fsSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip
+            sudo apt-get update && sudo apt-get install -y unzip
+            unzip terraform.zip
+            sudo mv terraform /usr/local/bin/
+            terraform -version
+
+        - name: Terraform Init
+          id: init
+          if: github.ref == 'refs/heads/main' 
+          run: | 
+            terraform init -backend=true \
+            -backend-config="bucket=${{ secrets.DEV_BUCKET_TF_STATE_PROD }}" \
+            -backend-config="dynamodb_table=${{ secrets.DEV_DYNAMODB_TABLE }}" \
+            -backend-config="key=${{ secrets.DEV_BUCKET_KEY_NAME}}" \
+            -backend-config="region=${{ env.AWS_REGION }}" \
+            -backend-config="encrypt=true"
+
+        - name: Terraform Destroy
+          run: terraform destroy -auto-approve
