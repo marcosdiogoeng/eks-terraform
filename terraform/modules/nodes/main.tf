@@ -3,7 +3,7 @@ resource "aws_eks_node_group" "eks_mng_node_group" {
   node_group_name = "${var.project_name}-nodegroup"
   node_role_arn   = aws_iam_role.eks_mng_role.arn
   subnet_ids      = var.private_subnets
-  instance_types = [lookup(var.instance_type, var.environment)]
+  instance_types  = [lookup(var.instance_type, var.environment)]
   scaling_config {
     desired_size = lookup(var.instance_number, var.environment)
     max_size     = 2

@@ -14,7 +14,7 @@ variable "environment" {
 }
 
 variable "private_subnets" {
-  type = set(string)
+  type        = set(string)
   description = "Set of private subnets to be created, with each subnet represented by its name"
 }
 

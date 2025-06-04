@@ -11,7 +11,7 @@ variable "tags" {
 variable "public_subnets" {
   type        = map(number)
   description = "Map of public subnets to be created, with keys as subnet names and values as their index"
-  default     = {
+  default = {
     "public_subnet_1" = 1
     "public_subnet_2" = 2
     "public_subnet_3" = 3
@@ -21,7 +21,7 @@ variable "public_subnets" {
 variable "private_subnets" {
   type        = map(number)
   description = "Map of private subnets to be created, with keys as subnet names and values as their index"
-  default     = {
+  default = {
     "private_subnet_1" = 1
     "private_subnet_2" = 2
     "private_subnet_3" = 3
