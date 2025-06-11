@@ -28,3 +28,24 @@ module "load_balancer" {
   oidc         = module.eks.oidc
   cluster_name = module.eks.cluster_name
 }
+
+module "external_dns" {
+  source       = "../../modules/add-ons/external-dns"
+  tags         = local.tags
+  project_name = var.project_name
+  oidc         = module.eks.oidc
+}
+
+module "ebs_csi" {
+  source       = "../../modules/add-ons/aws-ebs-csi"
+  tags         = local.tags
+  project_name = var.project_name
+  oidc         = module.eks.oidc
+}
+
+module "external_secrets" {
+  source       = "../../modules/add-ons/external-secrets"
+  tags         = local.tags
+  project_name = var.project_name
+  oidc         = module.eks.oidc
+}
